@@ -1,39 +1,31 @@
-import Phaser from 'phaser';
-import logoImg from './assets/logo.png';
-
-class MyGame extends Phaser.Scene
-{
-    constructor ()
-    {
-        super();
-    }
-
-    preload ()
-    {
-        this.load.image('logo', logoImg);
-    }
-      
-    create ()
-    {
-        const logo = this.add.image(400, 150, 'logo');
-      
-        this.tweens.add({
-            targets: logo,
-            y: 450,
-            duration: 2000,
-            ease: "Power2",
-            yoyo: true,
-            loop: -1
-        });
-    }
-}
+import Phaser from "phaser";
+import Game from "./scenes/game";
+import {
+  MIN_SIZE_WIDTH_SCREEN,
+  MIN_SIZE_HEIGHT_SCREEN,
+  MAX_SIZE_WIDTH_SCREEN,
+  MAX_SIZE_HEIGHT_SCREEN,
+} from "./constants/dimensions";
 
 const config = {
-    type: Phaser.AUTO,
-    parent: 'phaser-example',
-    width: 800,
-    height: 600,
-    scene: MyGame
+  type: Phaser.AUTO,
+  parent: "phaser-game",
+  scale: {
+    mode: Phaser.Scale.RESIZE,
+    parent: "phaser-game",
+    min: {
+      width: MIN_SIZE_WIDTH_SCREEN,
+      height: MIN_SIZE_HEIGHT_SCREEN,
+    },
+    max: {
+      width: MAX_SIZE_WIDTH_SCREEN,
+      height: MAX_SIZE_HEIGHT_SCREEN,
+    },
+  },
+  dom: {
+    createContainer: true,
+  },
+  scene: [Game],
 };
 
 const game = new Phaser.Game(config);
